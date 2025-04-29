@@ -20,20 +20,22 @@
 ## Установка
 
 1. Убедитесь, что установлен Python 3.12+
-2. Склонируйте репозиторий: git clone
+2. Склонируйте репозиторий: git clone git@github.com:Kesh113/IO_Database.git
 3. Проверьте работоспособность приложения: python3 test_database.py
 4. Запустите приложение в консоли: python3 io_database.py
 
 ## Структура проекта
 
 ├── io_database.py # Основной модуль
+
 ├── test_database.py # Юнит-тесты
+
 └── tests.json # Тестовые сценарии
 
 ## Примеры запросов
 
 **Базовые операции**:
-
+```
 > GET A
 NULL
 > SET A 10
@@ -49,9 +51,9 @@ NULL
 > GET B
 NULL
 > END
-
+```
 **Транзакции**:
-
+```
 > BEGIN
 > SET A 10
 > BEGIN
@@ -66,3 +68,4 @@ NULL
 > COMMIT
 > GET A
 20
+```
