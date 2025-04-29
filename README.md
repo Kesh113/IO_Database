@@ -1,3 +1,5 @@
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
+
 # Консольное хранилище данных (In-Memory Database)
 
 Простое интерактивное приложение для управления данными в оперативной памяти с поддержкой транзакций.
@@ -19,10 +21,9 @@
 
 ## Установка
 
-1. Убедитесь, что установлен Python 3.12+
-2. Склонируйте репозиторий: git clone git@github.com:Kesh113/IO_Database.git
-3. Проверьте работоспособность приложения: python3 test_database.py
-4. Запустите приложение в консоли: python3 io_database.py
+1. Склонируйте репозиторий: ```git clone git@github.com:Kesh113/IO_Database.git```
+2. Проверьте работоспособность приложения: ```python3 test_database.py```
+3. Запустите приложение в консоли: ```python3 io_database.py```
 
 ## Структура проекта
 
