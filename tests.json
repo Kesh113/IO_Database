@@ -1,0 +1,82 @@
+[
+  {
+    "name": "SET, GET, UNSET",
+    "commands": ["SET A 10", "GET A", "UNSET A", "GET A"],
+    "expected": ["10", "NULL"]
+  },
+  {
+    "name": "Переприсваивание переменной",
+    "commands": ["SET A 10", "SET A 20", "GET A"],
+    "expected": ["20"]
+  },
+  {
+    "name": "COUNTS и FIND",
+    "commands": ["SET A 10", "SET B 10", "COUNTS 10", "FIND 10", "UNSET A", "COUNTS 10", "FIND 10"],
+    "expected": ["2", "A B", "1", "B"]
+  },
+  {
+    "name": "FIND в транзакциях c удалением аргумента в 1ой транзакции",
+    "commands": ["SET A 10", "BEGIN", "UNSET A", "FIND 10", "GET A", "BEGIN", "SET A 20", "FIND 20"],
+    "expected": ["NULL", "NULL", "A"]
+  },
+  {
+    "name": "FIND в транзакциях c удалением аргумента во 2ой транзакции",
+    "commands": ["SET A 10", "BEGIN", "SET A 20", "FIND 10", "GET A", "BEGIN", "UNSET A", "FIND 20"],
+    "expected": ["NULL", "20", "NULL"]
+  },
+  {
+    "name": "FIND в транзакциях c изменением аргумента",
+    "commands": ["SET A 10", "BEGIN", "SET A 20", "FIND 10", "FIND 20", "BEGIN", "SET A 30", "FIND 20", "FIND 30"],
+    "expected": ["NULL", "A", "NULL", "A"]
+  },
+  {
+    "name": "COUNTS в транзакциях c удалением аргумента в 1ой транзакции",
+    "commands": ["SET A 10", "BEGIN", "UNSET A", "COUNTS 10", "BEGIN", "SET A 20", "COUNTS 20"],
+    "expected": ["0", "1"]
+  },
+  {
+    "name": "COUNTS в транзакциях c удалением аргумента во 2ой транзакции",
+    "commands": ["SET A 10", "BEGIN", "SET A 20", "COUNTS 10", "BEGIN", "UNSET A", "COUNTS 20"],
+    "expected": ["0", "0"]
+  },
+  {
+    "name": "COUNTS в транзакциях c изменением аргумента",
+    "commands": ["SET A 10", "BEGIN", "SET A 20", "COUNTS 10", "COUNTS 20", "BEGIN", "SET A 30", "COUNTS 20", "COUNTS 30"],
+    "expected": ["0", "1", "0", "1"]
+  },
+  {
+    "name": "Несуществующие значения",
+    "commands": ["GET X", "UNSET X", "COUNTS 99", "FIND 99"],
+    "expected": ["NULL", "0", "NULL"]
+  },
+  {
+    "name": "Невалидные команды",
+    "commands": ["SET", "SET A", "GET", "UNSET", "COUNTS", "FIND", "INVALID_CMD"],
+    "expected": ["Unknown command", "Unknown command", "Unknown command", "Unknown command", "Unknown command", "Unknown command", "Unknown command"]
+  },
+  {
+    "name": "Транзакция с откатом",
+    "commands": ["SET A 10", "BEGIN", "SET A 20", "GET A", "BEGIN", "SET A 30", "ROLLBACK", "GET A", "ROLLBACK", "GET A"],
+    "expected": ["20", "20", "10"]
+  },
+  {
+    "name": "Вложенные транзакции c COMMIT",
+    "commands": ["SET A 30", "BEGIN", "SET A 10", "BEGIN", "SET A 20", "GET A", "SET B 2", "COMMIT", "GET A", "GET B"],
+    "expected": ["20", "20", "2"]
+  },
+  {
+    "name": "Работа с транзакциями без BEGIN",
+    "commands": ["ROLLBACK", "COMMIT"],
+    "expected": ["NO TRANSACTION", "NO TRANSACTION"]
+  },
+  {
+    "name": "Пустой файл",
+    "commands": [],
+    "expected": []
+  },
+  {
+    "name": "Пустая строка в конце",
+    "commands": ["SET A 10", "GET A", " "],
+    "expected": ["10"]
+  }
+]
